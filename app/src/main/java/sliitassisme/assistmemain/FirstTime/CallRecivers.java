@@ -38,23 +38,6 @@ public class CallRecivers extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.v("Isha","Call Reciver Start");
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
-        notificationIntent.addCategory("android.intent.category.DEFAULT");
-        PendingIntent broadcast = PendingIntent.getBroadcast(context, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 20);
-        /*cal.set(Calendar.HOUR_OF_DAY,22);
-        cal.set(Calendar.MINUTE,00);
-        cal.set(Calendar.SECOND,00);*/
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
-
-
-
-
-        //Alrm
-
 
         //renderWeatherData("Colombo,LK");
         String time=MainActivity.DATABASEHANDLER.databasetostringTimeSedule(currntDay());
@@ -64,8 +47,32 @@ public class CallRecivers extends BroadcastReceiver {
         String aa="("+myList.get(0)+"#"+myList.get(1)+")";
         int minute = Integer.parseInt(myList.get(1));
         Toast.makeText(context,aa,Toast.LENGTH_LONG).show();
-        //hour=20;
-        //minute=40;
+        //int hour=01;
+        //int minute=00;
+        int minute1=1+minute;
+
+
+        Log.v("Isha","Call Reciver Start");
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+        notificationIntent.addCategory("android.intent.category.DEFAULT");
+        PendingIntent broadcast = PendingIntent.getBroadcast(context, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar cal = Calendar.getInstance();
+        //cal.add(Calendar.SECOND, 20);
+        /*cal.set(Calendar.HOUR_OF_DAY,22);
+        cal.set(Calendar.MINUTE,00);
+        cal.set(Calendar.SECOND,00);*/
+        cal.set(Calendar.MINUTE,minute1);
+        cal.set(Calendar.HOUR_OF_DAY,hour);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+
+
+
+
+        //Alrm
+
+
+
 
        /* if(weatherCondition){
             minute=minute-15;

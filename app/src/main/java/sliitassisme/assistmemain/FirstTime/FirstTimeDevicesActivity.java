@@ -331,7 +331,7 @@ public class FirstTimeDevicesActivity extends CommonActivity implements FirstTim
 
         manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
         
-        final Intent intent = new Intent(this, FirstTimeenterDailyScedule.class);
+        final Intent intent = new Intent(this, UserDetails.class);
         startActivity(intent);
 
 

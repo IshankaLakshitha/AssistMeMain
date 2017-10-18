@@ -33,7 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreen"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -43,21 +43,30 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".Health.HealthMain"/>
+
+        <activity android:name=".Health.StepsCount" />
+
+        <activity android:name=".Health.HelthTips"/>
+
+        <activity android:name=".Health.ListViewRemovalAnimation"/>
+
+        <activity android:name=".FirstTime.UserDetails"/>
 
         <activity android:name=".GPS.GpsActivity"/>
 
         <activity android:name=".FirstTime.FirstTimeDevicesActivity" />
 
-        <activity android:name=".TestActivity" />
-
         <activity android:name=".FirstTime.FirstTimeenterDailyScedule"></activity>
+
+        <activity android:name=".PopUpApp"/>
 
         <activity android:name=".Dashboard.DashboardActivity"
             android:parentActivityName=".FirstTime.FirstTimeDevicesActivity"/>
-
-        <activity android:name=".PopUpNotificationActivity"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"/>
 
         <service android:name=".BluetoothLEService" />
 

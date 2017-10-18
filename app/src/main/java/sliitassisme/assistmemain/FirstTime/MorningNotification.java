@@ -11,8 +11,8 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.TextView;
 
+import sliitassisme.assistmemain.PopUpApp;
 import sliitassisme.assistmemain.R;
-import sliitassisme.assistmemain.TestActivity;
 
 public class MorningNotification extends BroadcastReceiver {
 
@@ -24,10 +24,10 @@ public class MorningNotification extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent notificationIntent = new Intent(context, TestActivity.class);
+        Intent notificationIntent = new Intent(context, PopUpApp.class);
         Log.v("dd","Alarm reciver Done");
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(TestActivity.class);
+        stackBuilder.addParentStack(PopUpApp.class);
         stackBuilder.addNextIntent(notificationIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

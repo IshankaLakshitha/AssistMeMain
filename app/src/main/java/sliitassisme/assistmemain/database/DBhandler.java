@@ -43,6 +43,31 @@ public class DBhandler extends SQLiteOpenHelper {
     private static final String STATE="state";
 
 
+    String CREATE_Health_Detail_Table = "CREATE TABLE " + TABLE_HEALTH + "(" + HEALTH_DAY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + HEALTH_COLUM_DATE + " TEXT ,"+HEALTH_COLUM_STEPS +" TEXT "+ ");";
+    private static final String TABLE_HEALTH="health";//table name
+    private static final String HEALTH_DAY_ID="id";
+    private static final String HEALTH_COLUM_DATE="date";
+    private static final String HEALTH_COLUM_STEPS="steps";
+
+
+    String CREATE_User_Details_Table = "CREATE TABLE " + TABLE_USER + "(" + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USER_Day + " TEXT ,"+USER_Age +" TEXT ,"+USER_HEIGHT +" TEXT ,"+ USER_WEIGHT + " TEXT ," + USER_BMI + " TEXT " + ");";
+    private static final String TABLE_USER="User";//table name
+    private static final String USER_ID="uId";
+    private static final String USER_Day="date";
+    private static final String USER_Age="age";
+    private static final String USER_HEIGHT="uHeight";
+    private static final String USER_WEIGHT="uWeight";
+    private static final String USER_BMI="uBmi";
+
+    String CREATE_User_Name_Table = "CREATE TABLE " + TABLE_nUSER + "(" + USER_iD + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USER_Name + " TEXT ,"+USER_Gender +" TEXT ,"+USER_NickName +" TEXT ,"+ RedyTime + " TEXT ," + Location + " TEXT " + ");";
+    private static final String TABLE_nUSER="nUser"; //table name
+    private static final String USER_iD="uId";
+    private static final String USER_Name="uname";
+    private static final String USER_Gender="gender";
+    private static final String USER_NickName="nkname";
+    private static final String RedyTime="rtime";
+    private static final String Location="locat";
+
     public DBhandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
@@ -55,6 +80,9 @@ public class DBhandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_Scedule_Table);
         sqLiteDatabase.execSQL(CREATE_ITEM_DETAILS);
         sqLiteDatabase.execSQL(CREATE_ALARM_TABLE);
+        sqLiteDatabase.execSQL(CREATE_Health_Detail_Table);
+        sqLiteDatabase.execSQL(CREATE_User_Details_Table);
+        sqLiteDatabase.execSQL(CREATE_User_Name_Table);
     }
 
     @Override
@@ -62,6 +90,9 @@ public class DBhandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+TABLE_SCEDULE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+CREATE_ITEM_DETAILS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+CREATE_ALARM_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+CREATE_Health_Detail_Table);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+CREATE_User_Details_Table);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+CREATE_User_Name_Table);
         onCreate(sqLiteDatabase);
     }
 
@@ -236,4 +267,102 @@ public class DBhandler extends SQLiteOpenHelper {
         database.execSQL("DELETE FROM " + TABLE_ALARM + " WHERE " + NAME + "= '" + Name + "'");
         database.close();
     }
+
+    public String databasetostringHealth(String day){
+        String dbString="";
+        SQLiteDatabase db= getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_HEALTH + " WHERE date=?";
+        Cursor c =db.rawQuery(query,new String[]{day});
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            if(c.getString(c.getColumnIndex("id"))!=null) {
+                dbString= c.getString(2);
+            }
+            c.moveToNext();
+        }
+        db.close();
+        return dbString;
+    }
+
+
+
+    public void addHealthDetails(String day)
+    {
+        ContentValues values= new ContentValues();
+        values.put(HEALTH_COLUM_DATE,day);
+        SQLiteDatabase db= getWritableDatabase();
+        db.insert(TABLE_HEALTH,null,values);
+        db.close();
+    }
+
+    public boolean updateDataHealth(String day, String steps){
+        SQLiteDatabase sq=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(HEALTH_COLUM_STEPS,steps);
+        sq.update(TABLE_HEALTH,values,"date=?",new String[]{day});
+        return true;
+    }
+
+    public void adduserDetails(String day,String age,String uHeight,String uWeight,String uBmi)
+    {
+        ContentValues values= new ContentValues();
+        values.put(USER_Day,day);
+        values.put(USER_Age,age);
+        values.put(USER_HEIGHT,uHeight);
+        values.put(USER_WEIGHT,uWeight);
+        values.put(USER_BMI,uBmi);
+        SQLiteDatabase db= getWritableDatabase();
+        db.insert(TABLE_USER,null,values);
+        db.close();
+    }
+
+    public String databasetostringUser(String day){
+        String dbString="";
+        SQLiteDatabase db= getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_USER + " WHERE date=?";
+        Cursor c =db.rawQuery(query,new String[]{day});
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            if(c.getString(c.getColumnIndex("uId"))!=null) {
+                dbString= c.getString(5);
+            }
+            c.moveToNext();
+        }
+        db.close();
+        return dbString;
+    }
+
+    public String databasetostringUserName(String Name){
+        String dbString="";
+        SQLiteDatabase db= getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_nUSER + " WHERE uname=?";
+        Cursor c =db.rawQuery(query,new String[]{Name});
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            if(c.getString(c.getColumnIndex("uId"))!=null) {
+                dbString= c.getString(5);
+            }
+            c.moveToNext();
+        }
+        db.close();
+        return dbString;
+    }
+
+
+
+
+    public void adduserNameDetails(String uname,String gender,String nkname,String rtime,String locat)
+    {
+        ContentValues values= new ContentValues();
+        values.put(USER_Name,uname);
+        values.put(USER_Gender,gender);
+        values.put(USER_NickName,nkname);
+        values.put(RedyTime,rtime);
+        values.put(Location,locat);
+        SQLiteDatabase db= getWritableDatabase();
+        db.insert(TABLE_nUSER,null,values);
+        db.close();
+    }
+    //update database
+
 }

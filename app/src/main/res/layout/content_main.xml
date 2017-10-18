@@ -55,6 +55,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
+        android:onClick="healthComponant"
         android:text="Be healthy"
         android:textAppearance="@android:style/TextAppearance.Material.Display1"
         app:layout_constraintLeft_toLeftOf="parent"

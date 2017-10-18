@@ -20,6 +20,7 @@ import java.util.Calendar;
 
 import sliitassisme.assistmemain.FirstTime.CallRecivers;
 import sliitassisme.assistmemain.FirstTime.FirstTimeDevicesActivity;
+import sliitassisme.assistmemain.Health.HealthMain;
 import sliitassisme.assistmemain.database.DBhandler;
 
 public class MainActivity extends AppCompatActivity
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,17 +51,20 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         DATABASEHANDLER=new DBhandler(this,null,null,1);
-
+        //DATABASEHANDLER.adduserDetails("11","22","152","53","121");
+        //Intent intent1 = new Intent(this, FirstTimeDevicesActivity.class);
+        //startActivity(intent1);
         if(isFirstTime()) {
             Intent intent = new Intent(this, FirstTimeDevicesActivity.class);
             startActivity(intent);
             firsttime=1;
         }else{
             firsttime=0;
+
             //btndone.setVisibility(View.INVISIBLE);
         }
-
         setAlrm();
+
     }
 
     @Override
@@ -105,7 +111,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, FirstTimeDevicesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_health) {
-
+            Intent intent = new Intent(this, HealthMain.class);
+            startActivity(intent);
         } else if (id == R.id.nav_navigation) {
 
         } else if (id == R.id.nav_settings) {
@@ -135,13 +142,18 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void healthComponant(View view) {
+        Intent intent = new Intent(this, HealthMain.class);
+        startActivity(intent);
+    }
+
     public void setAlrm(){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent notificationIntent = new Intent(this, CallRecivers.class);
         //notificationIntent.addCategory("android.intent.category.DEFAULT");
         PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 40);
+        cal.add(Calendar.SECOND, 60);
         //cal.add(Calendar.DAY_OF_WEEK,day);
         /*cal.set(Calendar.HOUR_OF_DAY,22);
         cal.set(Calendar.MINUTE,00);
@@ -150,4 +162,6 @@ public class MainActivity extends AppCompatActivity
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, broadcast);
     }
+
+
 }
